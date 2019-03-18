@@ -37,19 +37,6 @@ public class GameManager : Singleton<GameManager>
         UIManager.Instance.OnMainMenuFadeComplete.AddListener(HandleMainMenuFadeComplete);
     }
 
-    private void Update()
-    {
-        if (_currentGameState == GameState.PREGAME)
-        {
-            return;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            TogglePause();
-        }
-    }
-
     public void LoadLevel(string levelName)
     {
         AsyncOperation ao = SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Additive);
@@ -123,7 +110,6 @@ public class GameManager : Singleton<GameManager>
             default:
                 break;
         }
-
         // dispatch messages
         OnGameStateChanged.Invoke(_currentGameState, previousGameState);
     }
