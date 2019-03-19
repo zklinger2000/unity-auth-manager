@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : Singleton<GameManager>
+public class GameManager : Manager<GameManager>
 {
     public enum GameState
     {
@@ -14,7 +14,7 @@ public class GameManager : Singleton<GameManager>
     public GameObject[] SystemPrefabs;    // Prefabs we can load through the Editor
     public Events.EventGameState OnGameStateChanged;
 
-    private string _currentLevelName = string.Empty;
+    private string _currentSceneName = string.Empty;
     private List<GameObject> _instancedSystemPrefabs;    // Instantiated Prefabs
     private List<AsyncOperation> _loadOperations;
     private GameState _currentGameState = GameState.PREGAME;
@@ -27,41 +27,27 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
-        DontDestroyOnLoad(gameObject);
-
         _instancedSystemPrefabs = new List<GameObject>();
         _loadOperations = new List<AsyncOperation>();
 
         InstantiateSystemPrefabs();
-
-        UIManager.Instance.OnMainMenuFadeComplete.AddListener(HandleMainMenuFadeComplete);
     }
 
-    public void LoadLevel(string levelName)
+    public void LoadScene(string sceneName)
     {
-        AsyncOperation ao = SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Additive);
+        // Replace current scene with a new scene, saving a reference to the async operation
+        AsyncOperation ao = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
         if (ao == null)
         {
-            Debug.LogErrorFormat("[Game Manager] Unable to load level {0}", levelName);
+            Debug.LogErrorFormat("[Game Manager] Unable to load scene {0}", sceneName);
             return;
         }
-
+        // Add a listener to the operation completed event
         ao.completed += OnLoadOperationComplete;
+        // Add to our List of load operations
         _loadOperations.Add(ao);
-
-        _currentLevelName = levelName;
-    }
-
-    public void UnloadLevel(string levelName)
-    {
-        AsyncOperation ao = SceneManager.UnloadSceneAsync(levelName);
-        if (ao == null)
-        {
-            Debug.LogErrorFormat("[Game Manager] Unable to unload level {0}", levelName);
-            return;
-        }
-
-        ao.completed += OnUnloadOperationComplete;
+        // Update current scene name
+        _currentSceneName = sceneName;
     }
 
     private void OnLoadOperationComplete(AsyncOperation ao)
@@ -76,19 +62,6 @@ public class GameManager : Singleton<GameManager>
             }
         }
         Debug.Log("Load Complete.");
-    }
-
-    private void OnUnloadOperationComplete(AsyncOperation ao)
-    {
-        Debug.Log("Unload Complete.");
-    }
-
-    private void HandleMainMenuFadeComplete(bool fadeOut)
-    {
-        if (!fadeOut)
-        {
-            UnloadLevel(_currentLevelName);
-        }
     }
 
     private void UpdateState(GameState state)
@@ -125,10 +98,12 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    protected override void OnDestroy()
+    protected void OnDestroy()
     {
-        base.OnDestroy();
-
+        if (_instancedSystemPrefabs == null)
+        {
+            return;
+        }
         for (int i = 0; i < _instancedSystemPrefabs.Count; ++i)
         {
             Destroy(_instancedSystemPrefabs[i]);
@@ -138,7 +113,7 @@ public class GameManager : Singleton<GameManager>
 
     public void StartGame()
     {
-        LoadLevel("Main");
+        LoadScene("Main");
     }
 
     public void TogglePause()
