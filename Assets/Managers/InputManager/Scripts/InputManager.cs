@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class InputManager : Manager<InputManager>
 {
@@ -11,7 +9,7 @@ public class InputManager : Manager<InputManager>
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                GameManager.Instance.StartGame();
+                GameManager.Instance.GoToMenu("auth");
             }
         }
 
@@ -28,6 +26,15 @@ public class InputManager : Manager<InputManager>
         if (GameManager.Instance.CurrentGameState == GameManager.GameState.PAUSED)
         {
 
+        }
+
+        // LOGIN MENU
+        if (GameManager.Instance.CurrentGameState == GameManager.GameState.LOGIN_MENU)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                GameManager.Instance.GoToMenu("auth");
+            }
         }
     }
 }

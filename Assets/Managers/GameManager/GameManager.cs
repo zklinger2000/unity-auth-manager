@@ -8,7 +8,9 @@ public class GameManager : Manager<GameManager>
     {
         PREGAME,
         RUNNING,
-        PAUSED
+        PAUSED,
+        AUTH_MENU,
+        LOGIN_MENU
     }
     // load other persistent systems
     public GameObject[] SystemPrefabs;    // Prefabs we can load through the Editor
@@ -109,6 +111,21 @@ public class GameManager : Manager<GameManager>
             Destroy(_instancedSystemPrefabs[i]);
         }
         _instancedSystemPrefabs.Clear();
+    }
+
+    public void GoToMenu(string menu)
+    {
+        switch (menu)
+        {
+            case "auth":
+                UpdateState(GameState.AUTH_MENU);
+                break;
+            case "login":
+                UpdateState(GameState.LOGIN_MENU);
+                break;
+            default:
+                break;
+        }
     }
 
     public void StartGame()

@@ -144,6 +144,7 @@ MonoBehaviour:
   SystemPrefabs:
   - {fileID: 1368435504543104, guid: 54c97bc568a963f4d945c01fa1a75f19, type: 3}
   - {fileID: 1601482484613369671, guid: 1b06b9080e8e61347a145203b28e410c, type: 3}
+  - {fileID: 1355830893615763802, guid: 4c9ba2aa08fe19e4c8a25a25edd3c7ad, type: 3}
   OnGameStateChanged:
     m_PersistentCalls:
       m_Calls: []
