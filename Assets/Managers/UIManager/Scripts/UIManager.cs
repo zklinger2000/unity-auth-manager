@@ -1,11 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class UIManager : Manager<UIManager>
 {
     [SerializeField] private MainMenu _mainMenu;
     [SerializeField] private PauseMenu _pauseMenu;
+    [SerializeField] private AuthMenu _authMenu;
+    [SerializeField] private LoginMenu _loginMenu;
     [SerializeField] private Camera _dummyCamera;
 
     public Events.EventFadeComplete OnMainMenuFadeComplete;
@@ -23,6 +23,8 @@ public class UIManager : Manager<UIManager>
     private void HandleGameStateChanged(GameManager.GameState currentState, GameManager.GameState previousState)
     {
         _pauseMenu.gameObject.SetActive(currentState == GameManager.GameState.PAUSED);
+        _authMenu.gameObject.SetActive(currentState == GameManager.GameState.AUTH_MENU);
+        _loginMenu.gameObject.SetActive(currentState == GameManager.GameState.LOGIN_MENU);
     }
 
     private void HandleMainMenuFadeComplete(bool fadeOut)
