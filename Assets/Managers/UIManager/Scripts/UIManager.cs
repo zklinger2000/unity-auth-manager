@@ -6,6 +6,7 @@ public class UIManager : Manager<UIManager>
     [SerializeField] private PauseMenu _pauseMenu;
     [SerializeField] private AuthMenu _authMenu;
     [SerializeField] private LoginMenu _loginMenu;
+    [SerializeField] private SignUpMenu _signUpMenu;
     [SerializeField] private Camera _dummyCamera;
 
     public Events.EventFadeComplete OnMainMenuFadeComplete;
@@ -25,6 +26,7 @@ public class UIManager : Manager<UIManager>
         _pauseMenu.gameObject.SetActive(currentState == GameManager.GameState.PAUSED);
         _authMenu.gameObject.SetActive(currentState == GameManager.GameState.AUTH_MENU);
         _loginMenu.gameObject.SetActive(currentState == GameManager.GameState.LOGIN_MENU);
+        _signUpMenu.gameObject.SetActive(currentState == GameManager.GameState.SIGNUP_MENU);
     }
 
     private void HandleMainMenuFadeComplete(bool fadeOut)

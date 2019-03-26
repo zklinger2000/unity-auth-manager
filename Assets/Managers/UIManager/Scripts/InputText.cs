@@ -1,18 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class InputText : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public string nameValue;
 
-    // Update is called once per frame
-    void Update()
+    public void onChange()
     {
-        
+        nameValue = GetComponent<InputField>().text;
+        Debug.Log("new things are being typed: " + nameValue);
     }
 }

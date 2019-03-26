@@ -20,6 +20,7 @@ public class AuthMenu : MonoBehaviour
 
     private void HandleSignUpClicked()
     {
+        GameManager.Instance.GoToMenu("signup");
         Debug.Log("CLICKED SignUp");
     }
 }

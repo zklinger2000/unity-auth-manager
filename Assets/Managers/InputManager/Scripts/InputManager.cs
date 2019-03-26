@@ -29,7 +29,8 @@ public class InputManager : Manager<InputManager>
         }
 
         // LOGIN MENU
-        if (GameManager.Instance.CurrentGameState == GameManager.GameState.LOGIN_MENU)
+        if (GameManager.Instance.CurrentGameState == GameManager.GameState.LOGIN_MENU ||
+            GameManager.Instance.CurrentGameState == GameManager.GameState.SIGNUP_MENU)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
