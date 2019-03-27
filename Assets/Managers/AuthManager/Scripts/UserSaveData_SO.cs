@@ -34,6 +34,10 @@ public class UserSaveData_SO : ScriptableObject
 
     public void Load()
     {
+        if (key == "")
+        {
+            key = name;
+        }
         JsonUtility.FromJsonOverwrite(PlayerPrefs.GetString(key), this);
     }
 }
