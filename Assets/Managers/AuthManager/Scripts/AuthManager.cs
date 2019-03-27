@@ -14,10 +14,29 @@ public class AuthManager : Manager<AuthManager>
         // TODO: Add token check
     }
 
-    public void PostNewUser(string username, string password){
+    public void PostNewUser(string username, string password)
+    {
         _currentRequest = new RequestHelper {
             Uri = basePath + "/users/create",
             Body = new JsonObjectNewUser(username, password)
+        };
+        RestClient.Post(_currentRequest)
+            .Then(res =>
+            {
+                JSONObject json = new JSONObject(res.Text);
+                _user.Username = json["username"].ToString();
+                _user.Token = json["token"].ToString();
+                _user.Print();
+                // TODO: Save token to file
+            })
+            .Catch(err => EditorUtility.DisplayDialog ("Error", err.Message, "Ok"));
+    }
+
+    public void PostLogin(string username, string password)
+    {
+        _currentRequest = new RequestHelper {
+            Uri = basePath + "/users/login",
+            Body = new JsonObjectLogin(username, password)
         };
         RestClient.Post(_currentRequest)
             .Then(res =>
