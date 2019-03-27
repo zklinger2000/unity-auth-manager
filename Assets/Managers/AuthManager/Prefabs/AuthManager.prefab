@@ -43,3 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49c7d642dd563e34e8c890fbbb070476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  basePath: http://localhost:8050/api
+  _userSaveData: {fileID: 11400000, guid: e52b8db08832b374ea14227efcf205e5, type: 2}
