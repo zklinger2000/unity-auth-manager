@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
-using Proyecto26;
 using UnityEditor;
+using Proyecto26;    // JSON Utility
 
 public class AuthManager : Manager<AuthManager>
 {
     [SerializeField] private string basePath = "http://localhost:8050/api";
 	private RequestHelper _currentRequest;
     private User _user;
+    [SerializeField] private UserSaveData_SO userSaveData;
 
     private void Start()
     {
@@ -26,8 +27,10 @@ public class AuthManager : Manager<AuthManager>
                 JSONObject json = new JSONObject(res.Text);
                 _user.Username = json["username"].ToString();
                 _user.Token = json["token"].ToString();
-                _user.Print();
-                // TODO: Save token to file
+                // Save token and username with PlayerPrefs
+                userSaveData.Username = _user.Username;
+                userSaveData.Token = _user.Token;
+                userSaveData.Save();
             })
             .Catch(err => EditorUtility.DisplayDialog ("Error", err.Message, "Ok"));
     }
@@ -44,8 +47,10 @@ public class AuthManager : Manager<AuthManager>
                 JSONObject json = new JSONObject(res.Text);
                 _user.Username = json["username"].ToString();
                 _user.Token = json["token"].ToString();
-                _user.Print();
-                // TODO: Save token to file
+                // Save token and username with PlayerPrefs
+                userSaveData.Username = _user.Username;
+                userSaveData.Token = _user.Token;
+                userSaveData.Save();
             })
             .Catch(err => EditorUtility.DisplayDialog ("Error", err.Message, "Ok"));
     }
