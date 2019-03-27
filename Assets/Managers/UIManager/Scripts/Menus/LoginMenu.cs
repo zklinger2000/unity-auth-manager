@@ -4,6 +4,8 @@ using UnityEngine.UI;
 public class LoginMenu : MonoBehaviour
 {
     [SerializeField] private Button SubmitButton;
+    [SerializeField] private InputField _username;
+    [SerializeField] private InputField _password;
 
     private void Start()
     {
@@ -12,6 +14,9 @@ public class LoginMenu : MonoBehaviour
 
     private void HandleSubmitClicked()
     {
-        Debug.Log("CLICKED Submit");
+        string username = _username.GetComponent<InputText>().nameValue;
+        string password = _password.GetComponent<InputText>().nameValue;
+
+        AuthManager.Instance.PostLogin(username, password);
     }
 }

@@ -6,6 +6,7 @@ public class SignUpMenu : MonoBehaviour
     [SerializeField] private Button SubmitButton;
     [SerializeField] private InputField _username;
     [SerializeField] private InputField _password;
+
     private void Start()
     {
         SubmitButton.onClick.AddListener(HandleSubmitClicked);
