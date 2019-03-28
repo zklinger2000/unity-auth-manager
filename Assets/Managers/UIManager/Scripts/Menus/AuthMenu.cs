@@ -10,17 +10,19 @@ public class AuthMenu : MonoBehaviour
     {
         LoginButton.onClick.AddListener(HandleLoginClicked);
         SignUpButton.onClick.AddListener(HandleSignUpClicked);
+        if (AuthManager.Instance.IsAuthenticated())
+        {
+            GameManager.Instance.GoToMenu("welcome");
+        }
     }
 
     private void HandleLoginClicked()
     {
         GameManager.Instance.GoToMenu("login");
-        Debug.Log("CLICKED Login");
     }
 
     private void HandleSignUpClicked()
     {
         GameManager.Instance.GoToMenu("signup");
-        Debug.Log("CLICKED SignUp");
     }
 }

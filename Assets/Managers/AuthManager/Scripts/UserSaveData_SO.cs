@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "New User Save Data", menuName = "User/Data", order = 1)]
 public class UserSaveData_SO : ScriptableObject
@@ -39,5 +40,12 @@ public class UserSaveData_SO : ScriptableObject
             key = name;
         }
         JsonUtility.FromJsonOverwrite(PlayerPrefs.GetString(key), this);
+    }
+
+    public void Delete()
+    {
+        _username = String.Empty;
+        _token = String.Empty;
+        PlayerPrefs.DeleteAll();
     }
 }

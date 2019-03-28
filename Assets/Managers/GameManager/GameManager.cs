@@ -11,7 +11,8 @@ public class GameManager : Manager<GameManager>
         PAUSED,
         AUTH_MENU,
         LOGIN_MENU,
-        SIGNUP_MENU
+        SIGNUP_MENU,
+        WELCOME_MENU
     }
     // load other persistent systems
     public GameObject[] SystemPrefabs;    // Prefabs we can load through the Editor
@@ -126,6 +127,9 @@ public class GameManager : Manager<GameManager>
                 break;
             case "signup":
                 UpdateState(GameState.SIGNUP_MENU);
+                break;
+            case "welcome":
+                UpdateState(GameState.WELCOME_MENU);
                 break;
             default:
                 break;
