@@ -11,6 +11,7 @@ public class WelcomeMenu : MonoBehaviour
     {
         LoginButton.onClick.AddListener(HandleLoginClicked);
         username.text = AuthManager.Instance.Username;
+        AuthManager.Instance.GetPrivateResource();
     }
 
     private void HandleLoginClicked()

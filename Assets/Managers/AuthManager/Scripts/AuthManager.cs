@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using Proyecto26;    // JSON Utility
@@ -78,6 +79,23 @@ public class AuthManager : Manager<AuthManager>
                 userSaveData.Token = _user.Token;
                 userSaveData.Save();
                 GameManager.Instance.GoToMenu("welcome");
+            })
+            .Catch(err => EditorUtility.DisplayDialog ("Error", err.Message, "Ok"));
+    }
+
+    public void GetPrivateResource()
+    {
+        _currentRequest = new RequestHelper {
+            Uri = basePath + "/me",
+            Headers = new Dictionary<string, string> {
+                { "Authorization", _user.Token }
+            }
+        };
+        RestClient.Get(_currentRequest)
+            .Then(res =>
+            {
+                JSONObject json = new JSONObject(res.Text);
+                Debug.LogFormat("Private message: {0}", json.ToString());
             })
             .Catch(err => EditorUtility.DisplayDialog ("Error", err.Message, "Ok"));
     }
